@@ -42,7 +42,7 @@ public class KryptoNoteActivity extends AppCompatActivity {
                 Cipher c = new Cipher(key);
                 ((EditText) findViewById(R.id.data)).setText(c.decrypt(note));
             }
-        } catch(Exception e){
+        } catch (Exception e){
                 Toast label = Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG);
                 label.show();
         }
@@ -59,7 +59,7 @@ public class KryptoNoteActivity extends AppCompatActivity {
             Toast label = Toast.makeText(this, "Note Saved.", Toast.LENGTH_LONG);
             label.show();
         } catch (Exception e) {
-            Toast label = Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG);
+            Toast label = Toast.makeText(this, "Enter a file name to save!", Toast.LENGTH_LONG);
             label.show();
 
         }
@@ -67,6 +67,7 @@ public class KryptoNoteActivity extends AppCompatActivity {
 
     public void onLoad(View v) {
             String name = ((EditText) findViewById(R.id.file)).getText().toString();
+
             try {
                 File dir = this.getFilesDir();
                 File file = new File(dir, name);
@@ -80,7 +81,8 @@ public class KryptoNoteActivity extends AppCompatActivity {
 
                 fr.close();
                 ((EditText) findViewById(R.id.data)).setText(show);
-                Toast.makeText(this, "Note Loaded.", Toast.LENGTH_LONG).show();
+                Toast label = Toast.makeText(this, "Note Loaded.", Toast.LENGTH_LONG);
+                label.show();
             } catch (Exception e) {
                 if (name.equals("")) {
                     Toast label = Toast.makeText(this, "Enter a file name to load!", Toast.LENGTH_LONG);
@@ -93,4 +95,5 @@ public class KryptoNoteActivity extends AppCompatActivity {
             }
 
     }
+
 }

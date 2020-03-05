@@ -56,4 +56,5 @@ public Cipher(String key)
         }
         return result;
     }
+
 }
