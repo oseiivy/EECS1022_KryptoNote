@@ -19,6 +19,35 @@ public class KryptoNoteActivity extends AppCompatActivity {
         setContentView(R.layout.kryptonote_layout);
     }
 
+    public void onEncrypt(View v)
+    {
+        try {
+            String key = ((EditText) findViewById(R.id.key)).getText().toString();
+            if (!key.equals("")){
+                String note = ((EditText) findViewById(R.id.data)).getText().toString();
+                Cipher c = new Cipher(key);
+                ((EditText) findViewById(R.id.data)).setText(c.encrypt(note));
+            }
+        } catch (Exception e) {
+            Toast label = Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG);
+            label.show();
+        }
+    }
+
+    public void onDecrypt(View v){
+        try{
+            String key = ((EditText) findViewById(R.id.key)).getText().toString();
+            if (!key.equals("")) {
+                String note = ((EditText) findViewById(R.id.data)).getText().toString();
+                Cipher c = new Cipher(key);
+                ((EditText) findViewById(R.id.data)).setText(c.decrypt(note));
+            }
+        } catch(Exception e){
+                Toast label = Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG);
+                label.show();
+        }
+    }
+
     public void onSave(View v) {
         try {
             String name = ((EditText) findViewById(R.id.file)).getText().toString();
@@ -27,30 +56,39 @@ public class KryptoNoteActivity extends AppCompatActivity {
             FileWriter fw = new FileWriter(file);
             fw.write(((EditText) findViewById(R.id.data)).getText().toString());
             fw.close();
-            Toast.makeText(this, "Note Saved.", Toast.LENGTH_SHORT);
+            Toast.makeText(this, "Note Saved.", Toast.LENGTH_LONG);
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+
         }
     }
 
     public void onLoad(View v) {
-        try {
             String name = ((EditText) findViewById(R.id.file)).getText().toString();
-            File dir = this.getFilesDir();
-            File file = new File(dir, name);
-            FileReader fr = new FileReader(file);
-            Toast.makeText(this, "Note Loaded.", Toast.LENGTH_SHORT).show();
-            // given a FileReader instance named fr:
+            try {
+                File dir = this.getFilesDir();
+                File file = new File(dir, name);
+                FileReader fr = new FileReader(file);
+                // given a FileReader instance named fr:
 
-            String show = "";
-            for (int c = fr.read(); c != -1; c = fr.read()) {
-                show += (char) c;
+                String show = "";
+                for (int c = fr.read(); c != -1; c = fr.read()) {
+                    show += (char) c;
+                }
+
+                fr.close();
+                ((EditText) findViewById(R.id.data)).setText(show);
+                Toast.makeText(this, "Note Loaded.", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                if (name.equals("")) {
+                    Toast label = Toast.makeText(this, "Enter a file name to load!", Toast.LENGTH_LONG);
+                    label.show();
+                } else {
+                    Toast label = Toast.makeText(this, "File name not found", Toast.LENGTH_LONG);
+                    label.show();
+
+                }
             }
-            fr.close();
-            ((EditText) findViewById(R.id.data)).setText(show);
-        } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
-        }
 
     }
 }
