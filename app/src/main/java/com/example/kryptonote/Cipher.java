@@ -22,7 +22,7 @@ public Cipher(String key)
     public String encrypt(String note)
     {
         String pad = makePad(note);
-        String result = " ";
+        String result = "";
 
         for (int i=0; i < note.length(); i++ )
         {
