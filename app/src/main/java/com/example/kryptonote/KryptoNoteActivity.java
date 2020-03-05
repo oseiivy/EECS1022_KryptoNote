@@ -56,9 +56,11 @@ public class KryptoNoteActivity extends AppCompatActivity {
             FileWriter fw = new FileWriter(file);
             fw.write(((EditText) findViewById(R.id.data)).getText().toString());
             fw.close();
-            Toast.makeText(this, "Note Saved.", Toast.LENGTH_LONG);
+            Toast label = Toast.makeText(this, "Note Saved.", Toast.LENGTH_LONG);
+            label.show();
         } catch (Exception e) {
-            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast label = Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG);
+            label.show();
 
         }
     }
