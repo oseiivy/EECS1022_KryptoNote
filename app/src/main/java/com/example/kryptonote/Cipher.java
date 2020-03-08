@@ -7,6 +7,7 @@ public class Cipher
 
 public Cipher(String key)
 {
+
     this.key = key;
 }
     private String makePad(String note)
